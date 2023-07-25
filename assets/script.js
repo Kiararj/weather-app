@@ -5,7 +5,7 @@ var searchButton = document.getElementById("search-btn");
 
 // Function that gets current weather
 function getCoordinate(cityName) {
-    var url =
+  var url =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     cityName +
     "&appid=" +
@@ -19,28 +19,45 @@ function getCoordinate(cityName) {
     .then((response) => {
       console.log(response);
       console.log(response.main.temp);
-    
-      // Parse out data 
-      
-      var cityTitle = response.name  
-      var cityTemp = response.main.temp
-      var cityHumidity = response.main.humidity
-      var cityWindSpeed = response.wind.speed
 
-    //  Create HTML elements, add data, append 
+      // Parses out data
 
-    var cityTitleEl =  document.createElement('h2')
-    var cityTempEl = document.createElement('p')
-    var cityHumidityEl = document.createElement('p')
-    var cityWindSpeedEl = document.createElement('p')
+      var cityTitle = response.name;
+      var todaysDate = dayjs();
+      var weatherIcon = response.weather[0].icon;
+      var cityTemp = response.main.temp;
+      var cityHumidity = response.main.humidity;
+      var cityWindSpeed = response.wind.speed;
 
-    cityTitleEl.textContent = cityTitle
-    cityTempEl.textContent = 'Temp: ' + cityTemp
-    cityHumidityEl.textContent = 'Humidity: ' + cityHumidity
-    cityWindSpeedEl.textContent = 'Wind Speed: ' + cityWindSpeed
+      // Creates HTML elements
 
+      var cityTitleEl = document.createElement("h2");
+      var todaysDateEl = document.createElement("p");
+      var weatherIconEl = document.createElement("img");
+      var cityTempEl = document.createElement("p");
+      var cityHumidityEl = document.createElement("p");
+      var cityWindSpeedEl = document.createElement("p");
 
-    document.getElementById('currentWeather').append(cityTitleEl, cityTempEl, cityHumidityEl, cityWindSpeedEl)
+      // Adds content to elements
+
+      cityTitleEl.textContent = cityTitle;
+      todaysDateEl.textContent = todaysDate.format("MMM D, YYYY");
+      weatherIconEl.src =  "https://openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
+      cityTempEl.textContent = "Temp: " + cityTemp;
+      cityHumidityEl.textContent = "Humidity: " + cityHumidity;
+      cityWindSpeedEl.textContent = "Wind Speed: " + cityWindSpeed;
+
+      // Appends elements to currentWeather ID
+      document
+        .getElementById("currentWeather")
+        .append(
+          cityTitleEl,
+          todaysDateEl,
+          weatherIconEl,
+          cityTempEl,
+          cityHumidityEl,
+          cityWindSpeedEl
+        );
     });
 }
 
@@ -54,19 +71,58 @@ function userWeather(cityName) {
     "&units=imperial";
   fetch(url)
     .then((response) => {
-
       return response.json();
     })
     .then((response) => {
       console.log(response);
+
+      var firstDayDate = response.list[0].dt_txt;
+      var firstDayIcon = response.list[0].weather[0].icon;
+      var firstDayTemp = response.list[0].main.temp;
+      var firstDayHumidity =  response.list[0].main.humidity;
+      var firstDayWindSpeed = response.list[0].wind.speed;
+
+
+            // Creates HTML elements
+
+            var firstDayDateEl = document.createElement("p");
+            var firstDayIconEl = document.createElement("img");
+            var firstDayTempEl = document.createElement("p");
+            var firstDayHumidityEl = document.createElement("p");
+            var firstDayWindSpeedEl = document.createElement("p");
+
+
+    // Adds content to elements
+
+            firstDayDateEl.textContent = firstDayDate;
+            firstDayIconEl.src =  "https://openweathermap.org/img/wn/" + firstDayIcon + "@2x.png";
+            firstDayTempEl.textContent = "Temp: " + firstDayTemp;
+            firstDayHumidityEl.textContent = "Humidity: " + firstDayHumidity;
+            firstDayWindSpeedEl.textContent = "Wind Speed: " + firstDayWindSpeed;
+      
+            // Appends elements to currentWeather ID
+            document
+              .getElementById("forecast")
+              .append(
+                firstDayDateEl,
+                firstDayIconEl,
+                firstDayTempEl,
+                firstDayHumidityEl,
+                firstDayWindSpeedEl
+              );
+
+      // for(var i = 0; i > 5; i++){
+
+      // }
+      // document.getElementById('currentWeather').append(cityTitleEl, cityTempEl, cityHumidityEl, cityWindSpeedEl)
     });
 }
 
 // Function that gets current and 5 day forecast
-function start(){
-     var textInput = cityText.value;
+function start() {
+  var textInput = cityText.value;
   getCoordinate(textInput);
-  userWeather(textInput)
+  userWeather(textInput);
 }
 
 // Click event that uses user input to generate coordinates
