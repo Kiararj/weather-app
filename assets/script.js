@@ -3,7 +3,6 @@ const apiKey = "5fd4a8f8e99d3f5261874c1f8fe806e3";
 var cityText = document.getElementById("city-input");
 var searchButton = document.getElementById("search-btn");
 
-
 // Function that gets current weather
 function getCoordinate(cityName) {
   var url =
@@ -76,7 +75,7 @@ function saveSearchHistory(cityName) {
   // Add the new city name to the search history array
   searchHistory.push(cityName);
 
-  // Limit the search history to a certain number of entries (optional)
+  // Limit the search history to a certain number of entries
   var maxHistoryLength = 5;
   if (searchHistory.length > maxHistoryLength) {
     searchHistory = searchHistory.slice(searchHistory.length - maxHistoryLength);
@@ -90,15 +89,21 @@ function displaySearchHistory() {
   var searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
   var historyList = document.getElementById("searchHistory");
 
-  // Clear the existing list
-  historyList.innerHTML = "";
+    // Clear the container before displaying new history
+    historyList.innerHTML = "";
 
   // Display each city name as a list item
   searchHistory.forEach(function (cityName) {
     var listItem = document.createElement("li");
     listItem.textContent = cityName;
     historyList.appendChild(listItem);
+    listItem.addEventListener('click', searchCity)
   });
+}
+
+function searchCity(){
+  getCoordinate(this.textContent);
+  currentWeather.innerHTML = "";
 }
 
 // Function that generates 5 day forecast
