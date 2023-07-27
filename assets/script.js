@@ -42,10 +42,11 @@ function getCoordinate(cityName) {
 
       cityTitleEl.textContent = cityTitle;
       todaysDateEl.textContent = todaysDate.format("MMM D, YYYY");
-      weatherIconEl.src =  "https://openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
-      cityTempEl.textContent = "Temp: " + cityTemp;
+      weatherIconEl.src =
+        "https://openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
+      cityTempEl.textContent = "Temp: " + cityTemp ;
       cityHumidityEl.textContent = "Humidity: " + cityHumidity;
-      cityWindSpeedEl.textContent = "Wind Speed: " + cityWindSpeed;
+      cityWindSpeedEl.textContent = "Wind Speed: " + cityWindSpeed + " mph";
 
       // Appends elements to currentWeather ID
       document
@@ -60,6 +61,7 @@ function getCoordinate(cityName) {
         );
     });
 }
+
 
 // Function that generates 5 day forecast
 function userWeather(cityName) {
@@ -76,45 +78,44 @@ function userWeather(cityName) {
     .then((response) => {
       console.log(response);
 
-      var firstDayDate = response.list[0].dt_txt;
-      var firstDayIcon = response.list[0].weather[0].icon;
-      var firstDayTemp = response.list[0].main.temp;
-      var firstDayHumidity =  response.list[0].main.humidity;
-      var firstDayWindSpeed = response.list[0].wind.speed;
+    for(var i = 0; i < 5; i++){
 
+      // Parses out data
 
-            // Creates HTML elements
+      var firstDayDate = response.list[i].dt_txt;
+      var firstDayIcon = response.list[i].weather[0].icon;
+      var firstDayTemp = response.list[i].main.temp;
+      var firstDayHumidity = response.list[i].main.humidity;
+      var firstDayWindSpeed = response.list[i].wind.speed;
 
-            var firstDayDateEl = document.createElement("p");
-            var firstDayIconEl = document.createElement("img");
-            var firstDayTempEl = document.createElement("p");
-            var firstDayHumidityEl = document.createElement("p");
-            var firstDayWindSpeedEl = document.createElement("p");
+      // Creates HTML elements
 
+      var firstDayDateEl = document.createElement("p");
+      var firstDayIconEl = document.createElement("img");
+      var firstDayTempEl = document.createElement("p");
+      var firstDayHumidityEl = document.createElement("p");
+      var firstDayWindSpeedEl = document.createElement("p");
 
-    // Adds content to elements
+      // Adds content to elements
 
-            firstDayDateEl.textContent = firstDayDate;
-            firstDayIconEl.src =  "https://openweathermap.org/img/wn/" + firstDayIcon + "@2x.png";
-            firstDayTempEl.textContent = "Temp: " + firstDayTemp;
-            firstDayHumidityEl.textContent = "Humidity: " + firstDayHumidity;
-            firstDayWindSpeedEl.textContent = "Wind Speed: " + firstDayWindSpeed;
-      
-            // Appends elements to currentWeather ID
-            document
-              .getElementById("forecast")
-              .append(
-                firstDayDateEl,
-                firstDayIconEl,
-                firstDayTempEl,
-                firstDayHumidityEl,
-                firstDayWindSpeedEl
-              );
+      firstDayDateEl.textContent = firstDayDate;
+      firstDayIconEl.src =
+        "https://openweathermap.org/img/wn/" + firstDayIcon + "@2x.png";
+      firstDayTempEl.textContent = "Temp: " + firstDayTemp;
+      firstDayHumidityEl.textContent = "Humidity: " + firstDayHumidity;
+      firstDayWindSpeedEl.textContent = "Wind Speed: " + firstDayWindSpeed + " mph";
 
-      // for(var i = 0; i > 5; i++){
-
-      // }
-      // document.getElementById('currentWeather').append(cityTitleEl, cityTempEl, cityHumidityEl, cityWindSpeedEl)
+      // Appends elements to forecast ID
+      document
+        .getElementById("forecast")
+        .append(
+          firstDayDateEl,
+          firstDayIconEl,
+          firstDayTempEl,
+          firstDayHumidityEl,
+          firstDayWindSpeedEl
+        );
+}
     });
 }
 
