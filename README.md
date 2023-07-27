@@ -1,17 +1,15 @@
 # Weather App
 
-## User Story
+![Alt text](/assets/mock-up.png "Screenshot of weather app website")
 
-AS A traveler
-I WANT to see the weather outlook for multiple cities
-SO THAT I can plan a trip accordingly
+## Description
 
-## Acceptance Criteria
+This weather app was created to find weather conditions for the current and next 5 days. I learned about using the fetch functions to use APIs in projects. I also learned about local storage and how to save it to a webpage.
+## Usage
 
-THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
-WHEN I click on a city in the search history
-THEN I am again presented with current and future conditions for that city
+Enter a city name into the text box and click the search button. Click on the city names saved in the search history to pull information for previous cities searched.
 
-## Mock-Up
+## Credits
 
-![Alt text](/assets/mock-up.png "Mockup of website")
+Received help from Tutor Jose Lopez and LA Beau Fortier.
+
